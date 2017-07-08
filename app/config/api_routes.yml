@@ -1,0 +1,3 @@
+add-book:
+    path:     /add-book
+    defaults: { _controller: AppBundle:api/v1/Api:addBook }

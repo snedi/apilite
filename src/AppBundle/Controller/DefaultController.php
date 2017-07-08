@@ -31,12 +31,20 @@ class DefaultController extends Controller
     }
 
 	/**
-     * @Route("/api/v{api_version}/api-route", name="api")
+     * @Route("/api/v{api_version}/{api_route}", name="api")
      */
-    public function apiAction(Request $request, $api_version)
+    public function apiAction(Request $request, $api_version, $api_route)
     {
-		echo "<pre>";
-		var_dump($api_version);die();
+        /** @var string $path for API versioning */
+        $path = $this->get('kernel')->locateResource('@AppBundle/Controller/api/v' . $api_version . '/ApiController.php');
+
+        spl_autoload_register(function () use ($path) {
+            require $path;
+        });
+
+        $apiController = new ApiController($api_route);
+
+        var_dump($apiController->addBookAction());
 
     }
 
