@@ -18,15 +18,15 @@ class ApiController extends Controller
         $this->api_route = $api_route;
     }
 
-    public function bookApiAction()
+    public function bookApiAction($params = null)
     {
-        var_dump($_REQUEST);
+        var_dump($params);
         var_dump($_SERVER['REQUEST_METHOD']);die();
     }
 
-    public function authorApiAction()
+    public function authorApiAction($params = null)
     {
-        var_dump($_REQUEST);
+        var_dump($params);
         var_dump($_SERVER['REQUEST_METHOD']);die();
     }
 

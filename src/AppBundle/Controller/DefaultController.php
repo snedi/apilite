@@ -31,9 +31,10 @@ class DefaultController extends Controller
     }
 
 	/**
-     * @Route("/api/v{api_version}/{api_route}", name="api")
+     * @Route("/api/v{api_version}/{res}", name="api")
+     * @Route("/api/v{api_version}/{res}/{id}", name="api_res_id")
      */
-    public function apiAction(Request $request, $api_version, $api_route)
+    public function apiAction(Request $request, $api_version, $res, $id = null)
     {
         /** @var string $path for API versioning */
         $path = $this->get('kernel')->locateResource('@AppBundle/Controller/api/v' . $api_version . '/ApiController.php');
@@ -43,9 +44,9 @@ class DefaultController extends Controller
             require $path;
         });
 
-        $apiController = new $apiController($api_route);
+        $apiController = new $apiController($res);
 
-        var_dump($apiController->bookApiAction());
+        var_dump($apiController->bookApiAction(['id' => $id]));
 
     }
 
