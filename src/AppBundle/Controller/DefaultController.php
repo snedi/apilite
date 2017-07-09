@@ -37,12 +37,13 @@ class DefaultController extends Controller
     {
         /** @var string $path for API versioning */
         $path = $this->get('kernel')->locateResource('@AppBundle/Controller/api/v' . $api_version . '/ApiController.php');
+        $apiController = 'AppBundle\Controller\api\v' . $api_version . '\ApiController';
 
         spl_autoload_register(function () use ($path) {
             require $path;
         });
 
-        $apiController = new ApiController($api_route);
+        $apiController = new $apiController($api_route);
 
         var_dump($apiController->addBookAction());
 
