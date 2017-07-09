@@ -45,7 +45,7 @@ class DefaultController extends Controller
 
         $apiController = new $apiController($api_route);
 
-        var_dump($apiController->addBookAction());
+        var_dump($apiController->bookApiAction());
 
     }
 

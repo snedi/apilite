@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Author;
+use AppBundle\Entity\Book;
 
 class ApiController extends Controller
 {
@@ -17,8 +18,17 @@ class ApiController extends Controller
         $this->api_route = $api_route;
     }
 
-    public function addBookAction()
+    public function bookApiAction()
     {
-        var_dump($this->api_route);die();
+        var_dump($_REQUEST);
+        var_dump($_SERVER['REQUEST_METHOD']);die();
     }
+
+    public function authorApiAction()
+    {
+        var_dump($_REQUEST);
+        var_dump($_SERVER['REQUEST_METHOD']);die();
+    }
+
+
 }

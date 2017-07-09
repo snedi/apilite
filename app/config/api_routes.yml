@@ -1,3 +1,7 @@
-add-book:
-    path:     /add-book
-    defaults: { _controller: AppBundle:api/v1/Api:addBook }
+book:
+    path:     /book
+    defaults: { _controller: AppBundle:api/v1/Api:bookApi }
+
+author:
+    path:     /author
+    defaults: { _controller: AppBundle:api/v1/Api:authorApi }
