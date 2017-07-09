@@ -42,7 +42,7 @@ class DefaultController extends Controller
             require $path;
         });
 
-        $apiController = $apiController::factory('AppBundle\Controller\api\v1\BookApiController');
+        $apiController = $apiController::factory('AppBundle\Controller\api\v1\\' . $apiController::$mapRouteApiClass[$res]);
 
         var_dump($apiController->apiAction(['id' => $id]));
     }
