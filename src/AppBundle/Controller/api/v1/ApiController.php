@@ -9,26 +9,16 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Author;
 use AppBundle\Entity\Book;
 
-class ApiController extends Controller
+use AppBundle\Controller\api\v1\BookApiController;
+
+abstract class ApiController extends Controller
 {
     public $api_route;
 
-    function __construct($api_route)
+    abstract public function apiAction($params = null);
+
+    public static function factory($class)
     {
-        $this->api_route = $api_route;
+        return new $class();
     }
-
-    public function bookApiAction($params = null)
-    {
-        var_dump($params);
-        var_dump($_SERVER['REQUEST_METHOD']);die();
-    }
-
-    public function authorApiAction($params = null)
-    {
-        var_dump($params);
-        var_dump($_SERVER['REQUEST_METHOD']);die();
-    }
-
-
 }

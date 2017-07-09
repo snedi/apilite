@@ -6,8 +6,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use AppBundle\Entity\Author;
-
 class DefaultController extends Controller
 {
     /**
@@ -44,10 +42,9 @@ class DefaultController extends Controller
             require $path;
         });
 
-        $apiController = new $apiController($res);
+        $apiController = $apiController::factory('AppBundle\Controller\api\v1\BookApiController');
 
-        var_dump($apiController->bookApiAction(['id' => $id]));
-
+        var_dump($apiController->apiAction(['id' => $id]));
     }
 
     /**
