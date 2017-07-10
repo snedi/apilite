@@ -46,8 +46,9 @@ class DefaultController extends Controller
         $apiController = $apiController::factory('AppBundle\Controller\api\v1\\' . $apiController::$mapRouteApiClass[$res],
             $this->getDoctrine()->getManager());
 
-        //return new JsonResponse(array('response' => $apiController->apiAction()));
-        return $apiController->apiAction();
+        return $apiController->apiAction([
+            'id' => $id
+        ]);
     }
 
     /**

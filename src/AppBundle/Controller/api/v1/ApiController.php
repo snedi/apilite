@@ -15,27 +15,28 @@ abstract class ApiController extends Controller
         'author' => 'AuthorApiController',
     ];
 
-    abstract public function getAction();
-    abstract public function putAction();
+    abstract public function getAction($id = null);
+    abstract public function putAction($id = null);
     abstract public function postAction();
-    abstract public function deleteAction();
+    abstract public function deleteAction($id = null);
 
     public function apiAction($params = null)
     {
         $method = $_SERVER['REQUEST_METHOD'];
+        isset($params['id']) ? $id = $params['id'] : $id = null;
 
         switch ($method) {
             case 'GET':
-                $response = $this->getAction();
+                $response = $this->getAction($id);
                 break;
             case 'PUT':
-                $response = $this->putAction();
+                $response = $this->putAction($id);
                 break;
             case 'POST':
                 $response = $this->postAction();
                 break;
             case 'DELETE':
-                $response = $this->deleteAction();
+                $response = $this->deleteAction($id);
                 break;
 
             default:

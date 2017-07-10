@@ -20,24 +20,46 @@ class BookApiController extends ApiController
         $this->em = $em;
     }
 
-    public function getAction()
+    public function getAction($id = null)
     {
-        $collection = $this->em->getRepository(Book::class)->findAll();
-
-        // TODO: fetch assoc array should be built either via Hydration or some other approach if possible
-        foreach ($collection as $item) {
-            $data[] = [
-                'id' => $item->getId(),
-                'author_id' => $item->getAuthorId(),
-                'name' => $item->getName(),
-                'description' => $item->getDescription(),
-            ];
+        if ($id) {
+            // TODO: fetch assoc array should be built either via Hydration or some other approach if possible
+            $item = $this->em->getRepository(Book::class)->find($id);
+            if ($item) {
+                $data[] = [
+                    'id' => $item->getId(),
+                    'author_id' => $item->getAuthorId(),
+                    'name' => $item->getName(),
+                    'description' => $item->getDescription(),
+                ];
+                $status = 200;
+            } else {
+                $data = null;
+                $status = 404;
+            }
+        } else {
+            // TODO: fetch assoc array should be built either via Hydration or some other approach if possible
+            $collection = $this->em->getRepository(Book::class)->findAll();
+            if ($collection) {
+                foreach ($collection as $item) {
+                    $data[] = [
+                        'id' => $item->getId(),
+                        'author_id' => $item->getAuthorId(),
+                        'name' => $item->getName(),
+                        'description' => $item->getDescription(),
+                    ];
+                    $status = 200;
+                }
+            } else {
+                $data = null;
+                $status = 404;
+            }
         }
 
-        return new Response(new JsonResponse($data), 200, array('content-type' => 'text/json'));
+        return new Response(new JsonResponse($data), $status, array('content-type' => 'text/json'));
     }
 
-    public function putAction()
+    public function putAction($id = null)
     {
         // test resonses
         $response = new Response(
@@ -49,7 +71,7 @@ class BookApiController extends ApiController
         return $response;
     }
 
-    public function deleteAction()
+    public function deleteAction($id = null)
     {
         // test resonses
         $response = new Response(

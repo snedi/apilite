@@ -20,22 +20,42 @@ class AuthorApiController extends ApiController
         $this->em = $em;
     }
 
-    public function getAction()
+    public function getAction($id = null)
     {
-        $collection = $this->em->getRepository(Author::class)->findAll();
-
-        // TODO: fetch assoc array should be built either via Hydration or some other approach if possible
-        foreach ($collection as $item) {
-            $data[] = [
-                'id' => $item->getId(),
-                'name' => $item->getName(),
-            ];
+        if ($id) {
+            // TODO: fetch assoc array should be built either via Hydration or some other approach if possible
+            $item = $this->em->getRepository(Author::class)->find($id);
+            if ($item) {
+                $data[] = [
+                    'id' => $item->getId(),
+                    'name' => $item->getName(),
+                ];
+                $status = 200;
+            } else {
+                $data = null;
+                $status = 404;
+            }
+        } else {
+            // TODO: fetch assoc array should be built either via Hydration or some other approach if possible
+            $collection = $this->em->getRepository(Author::class)->findAll();
+            if ($collection) {
+                foreach ($collection as $item) {
+                    $data[] = [
+                        'id' => $item->getId(),
+                        'name' => $item->getName(),
+                    ];
+                    $status = 200;
+                }
+            } else {
+                $data = null;
+                $status = 404;
+            }
         }
 
-        return new Response(new JsonResponse($data), 200, array('content-type' => 'text/json'));
+        return new Response(new JsonResponse($data), $status, array('content-type' => 'text/json'));
     }
 
-    public function putAction()
+    public function putAction($id = null)
     {
         // test resonses
         $response = new Response(
@@ -47,7 +67,7 @@ class AuthorApiController extends ApiController
         return $response;
     }
 
-    public function deleteAction()
+    public function deleteAction($id = null)
     {
         // test resonses
         $response = new Response(
