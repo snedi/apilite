@@ -89,14 +89,23 @@ class AuthorApiController extends ApiController
         return new Response(new JsonResponse($data), $status, array('content-type' => 'text/json'));
     }
 
-    public function postAction()
+    public function postAction($id = null)
     {
-        $obj = new Author();
-        $obj->setName($_REQUEST['name']);
+        if (!$id) {
+            $obj = new Author();
+            $obj->setName($_REQUEST['name']);
 
-        $this->em->persist($obj);
-        $this->em->flush();
+            $this->em->persist($obj);
+            $this->em->flush();
 
-        return var_dump($_REQUEST);
+            $data = null;
+            $status = 201;
+        } else {
+            $data = null;
+            // no specific item method for POST /sample_action/{id}
+            $status = 405;
+        }
+
+        return new Response(new JsonResponse($data), $status, array('content-type' => 'text/json'));
     }
 }

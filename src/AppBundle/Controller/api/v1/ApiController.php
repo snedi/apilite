@@ -17,7 +17,7 @@ abstract class ApiController extends Controller
 
     abstract public function getAction($id = null);
     abstract public function putAction($id = null);
-    abstract public function postAction();
+    abstract public function postAction($id = null);
     abstract public function deleteAction($id = null);
 
     public function apiAction($params = null)
@@ -33,7 +33,7 @@ abstract class ApiController extends Controller
                 $response = $this->putAction($id);
                 break;
             case 'POST':
-                $response = $this->postAction();
+                $response = $this->postAction($id);
                 break;
             case 'DELETE':
                 $response = $this->deleteAction($id);
