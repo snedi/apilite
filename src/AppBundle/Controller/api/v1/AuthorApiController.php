@@ -69,14 +69,24 @@ class AuthorApiController extends ApiController
 
     public function deleteAction($id = null)
     {
-        // test resonses
-        $response = new Response(
-            'DELETE',
-            200,
-            array('content-type' => 'text/json')
-        );
-        //var_dump($response);die();
-        return $response;
+        if ($id) {
+            $item = $this->em->getRepository(Author::class)->find($id);
+            if ($item) {
+                $this->em->remove($item);
+                $this->em->flush();
+
+                $data = null;
+                $status = 200;
+            } else {
+                $data = null;
+                $status = 404;
+            }
+        } else {
+            $data = null;
+            $status = 405;
+        }
+
+        return new Response(new JsonResponse($data), $status, array('content-type' => 'text/json'));
     }
 
     public function postAction()
