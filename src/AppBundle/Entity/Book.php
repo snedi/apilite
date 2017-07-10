@@ -45,4 +45,19 @@ class Book
     {
         $this->description = $description;
     }
+
+    public function getAuthorId()
+    {
+        return $this->author_id;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }

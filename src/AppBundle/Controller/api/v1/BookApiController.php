@@ -43,7 +43,18 @@ class BookApiController extends ApiController
 
     private function getAction()
     {
-        return "GET";
+        $books = $this->em->getRepository(Book::class)->findAll();
+
+        // TODO: fetch assoc array should be built either via Hydration or some other approach if possible
+        foreach ($books as $book) {
+            $booksArr[] = [
+                'author_id' => $book->getAuthorId(),
+                'name' => $book->getName(),
+                'description' => $book->getDescription(),
+            ];
+        }
+
+        return $booksArr;
     }
 
     private function putAction()
@@ -54,13 +65,13 @@ class BookApiController extends ApiController
     private function postAction()
     {
         $book = new Book();
-        $book->setAuthorId(1);
-        $book->setName('test22');
-        $book->setDescription('test11');
+        $book->setAuthorId($_REQUEST['author_id']);
+        $book->setName($_REQUEST['name']);
+        $book->setDescription($_REQUEST['description']);
 
         $this->em->persist($book);
         $this->em->flush();
 
-        return 'ok';
+        return var_dump($_REQUEST);
     }
 }

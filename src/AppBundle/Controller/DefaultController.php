@@ -47,6 +47,7 @@ class DefaultController extends Controller
             $this->getDoctrine()->getManager());
 
         return new JsonResponse(array('response' => $apiController->apiAction()));
+        //return $apiController->apiAction();
     }
 
     /**
