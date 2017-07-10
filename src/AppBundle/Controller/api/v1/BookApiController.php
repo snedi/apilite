@@ -18,30 +18,7 @@ class BookApiController extends ApiController
         $this->em = $em;
     }
 
-    public function apiAction($params = null)
-    {
-        $method = $_SERVER['REQUEST_METHOD'];
-
-        switch ($method) {
-            case 'GET':
-                $response = $this->getAction();
-                break;
-            case 'PUT':
-                $response = $this->putAction();
-                break;
-            case 'POST':
-                $response = $this->postAction();
-                break;
-
-            default:
-                $response = $this->getAction();
-                break;
-        }
-
-        return $response;
-    }
-
-    private function getAction()
+    public function getAction()
     {
         $books = $this->em->getRepository(Book::class)->findAll();
 
@@ -57,12 +34,12 @@ class BookApiController extends ApiController
         return $booksArr;
     }
 
-    private function putAction()
+    public function putAction()
     {
         return "PUT";
     }
 
-    private function postAction()
+    public function postAction()
     {
         $book = new Book();
         $book->setAuthorId($_REQUEST['author_id']);
