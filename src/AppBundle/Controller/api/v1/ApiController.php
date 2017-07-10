@@ -11,12 +11,14 @@ abstract class ApiController extends Controller
     public $api_route;
 
     public static $mapRouteApiClass = [
-        'book' => 'BookApiController'
+        'book' => 'BookApiController',
+        'author' => 'AuthorApiController',
     ];
 
     abstract public function getAction();
     abstract public function putAction();
     abstract public function postAction();
+    abstract public function deleteAction();
 
     public function apiAction($params = null)
     {
@@ -32,9 +34,12 @@ abstract class ApiController extends Controller
             case 'POST':
                 $response = $this->postAction();
                 break;
+            case 'DELETE':
+                $response = $this->deleteAction();
+                break;
 
             default:
-                $response = $this->getAction();
+                $response = null;
                 break;
         }
 
