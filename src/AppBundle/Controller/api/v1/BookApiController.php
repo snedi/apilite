@@ -11,6 +11,13 @@ use AppBundle\Entity\Book;
 
 class BookApiController extends ApiController
 {
+    private $em;
+
+    public function __construct($em)
+    {
+        $this->em = $em;
+    }
+
     public function apiAction($params = null)
     {
         $method = $_SERVER['REQUEST_METHOD'];
@@ -21,6 +28,9 @@ class BookApiController extends ApiController
                 break;
             case 'PUT':
                 $response = $this->putAction();
+                break;
+            case 'POST':
+                $response = $this->postAction();
                 break;
 
             default:
@@ -39,5 +49,18 @@ class BookApiController extends ApiController
     private function putAction()
     {
         return "PUT";
+    }
+
+    private function postAction()
+    {
+        $book = new Book();
+        $book->setAuthorId(1);
+        $book->setName('test22');
+        $book->setDescription('test11');
+
+        $this->em->persist($book);
+        $this->em->flush();
+
+        return 'ok';
     }
 }

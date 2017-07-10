@@ -16,8 +16,8 @@ abstract class ApiController extends Controller
 
     abstract public function apiAction($params = null);
 
-    public static function factory($class)
+    public static function factory($class, $em)
     {
-        return new $class();
+        return new $class($em);
     }
 }

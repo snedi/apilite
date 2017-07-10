@@ -30,4 +30,19 @@ class Book
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
     private $description;
+
+    public function setAuthorId($author_id)
+    {
+        $this->author_id = $author_id;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 }
