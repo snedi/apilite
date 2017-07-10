@@ -61,14 +61,29 @@ class BookApiController extends ApiController
 
     public function putAction($id = null)
     {
-        // test resonses
-        $response = new Response(
-            'PUT',
-            200,
-            array('content-type' => 'text/json')
-        );
-        //var_dump($response);die();
-        return $response;
+        if ($id) {
+            parse_str(file_get_contents("php://input"), $putVars);
+            $obj = $this->em->getRepository(Author::class)->find($id);
+            if ($obj) {
+                $obj->setAuthorId($putVars['author_id']);
+                $obj->setName($putVars['name']);
+                $obj->setDescription($putVars['description']);
+
+                $this->em->persist($obj);
+                $this->em->flush();
+
+                $data = null;
+                $status = 200;
+            } else {
+                $data = null;
+                $status = 404;
+            }
+        } else {
+            $data = null;
+            $status = 405;
+        }
+
+        return new Response(new JsonResponse($data), $status, array('content-type' => 'text/json'));
     }
 
     public function deleteAction($id = null)
