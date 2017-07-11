@@ -63,11 +63,12 @@ abstract class ApiController extends Controller
 
     public function isAuthenticated()
     {
-        $item = $this->em->getRepository(Auth::class)->findByToken($_REQUEST['token']);
-        return ($item) ? true : false;
-        if(!$item) {
-
+        if (array_key_exists('token', $_REQUEST) && $_REQUEST['token']) {
+            $item = $this->em->getRepository(Auth::class)->findByToken($_REQUEST['token']);
+            return ($_REQUEST['token'] && $item) ? true : false;
         }
+
+        return false;
     }
 
     public function noAuthMessage()
