@@ -21,7 +21,7 @@ class Auth
      */
     private $token;
 
-    public function setName($token)
+    public function setToken($token)
     {
         $this->token = $token;
     }

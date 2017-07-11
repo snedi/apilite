@@ -13,6 +13,7 @@ abstract class ApiController extends Controller
     public static $mapRouteApiClass = [
         'book' => 'BookApiController',
         'author' => 'AuthorApiController',
+        'auth' => 'AuthApiController',
     ];
 
     abstract public function getAction($id = null);
