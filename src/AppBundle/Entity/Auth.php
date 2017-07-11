@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Auth
 {
+    const TOKEN_LENGTH = 10;
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

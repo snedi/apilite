@@ -22,31 +22,15 @@ class AuthApiController extends ApiController
 
     public function getAction($id = null)
     {
-        if ($id) {
-            // TODO: fetch assoc array should be built either via Hydration or some other approach if possible
-            $item = $this->em->getRepository(Auth::class)->find($id);
-            if ($item) {
-                $data[] = [
-                    'id' => $item->getId(),
-                    'author_id' => $item->getAuthorId(),
-                    'name' => $item->getName(),
-                    'description' => $item->getDescription(),
-                ];
-                $status = 200;
-            } else {
-                $data = null;
-                $status = 404;
-            }
-        } else {
-            $obj = new Auth();
-            $obj->setToken(123);
+        $obj = new Auth();
+        $token = bin2hex(random_bytes(Auth::TOKEN_LENGTH));
+        $obj->setToken($token);
 
-            $this->em->persist($obj);
-            $this->em->flush();
+        $this->em->persist($obj);
+        $this->em->flush();
 
-            $data = null;
-            $status = 201;
-        }
+        $data = ['token' => $token];
+        $status = 201;
 
         return new Response(new JsonResponse($data), $status, array('content-type' => 'text/json'));
     }
