@@ -9,3 +9,7 @@ INSTALLATION
 
 * Run `composer install` in the project root
 * Run `php app/console server:run` to start a development server
+
+TESTS
+--------------
+Run `bin/phpunit -c app` to start all tests
