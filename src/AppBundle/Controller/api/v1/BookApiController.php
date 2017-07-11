@@ -13,7 +13,7 @@ use AppBundle\Entity\Book;
 
 class BookApiController extends ApiController
 {
-    private $em;
+    public $em;
 
     public function __construct($em)
     {
@@ -63,7 +63,7 @@ class BookApiController extends ApiController
     {
         if ($id) {
             parse_str(file_get_contents("php://input"), $putVars);
-            $obj = $this->em->getRepository(Author::class)->find($id);
+            $obj = $this->em->getRepository(Book::class)->find($id);
             if ($obj) {
                 $obj->setAuthorId($putVars['author_id']);
                 $obj->setName($putVars['name']);

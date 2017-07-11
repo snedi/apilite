@@ -13,7 +13,7 @@ use AppBundle\Entity\Author;
 
 class AuthorApiController extends ApiController
 {
-    private $em;
+    public $em;
 
     public function __construct($em)
     {

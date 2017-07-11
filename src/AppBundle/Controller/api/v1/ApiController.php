@@ -5,6 +5,10 @@ namespace AppBundle\Controller\api\v1;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+use AppBundle\Entity\Auth;
 
 abstract class ApiController extends Controller
 {
@@ -31,13 +35,22 @@ abstract class ApiController extends Controller
                 $response = $this->getAction($id);
                 break;
             case 'PUT':
-                $response = $this->putAction($id);
+                if ($this->isAuthenticated())
+                    $response = $this->putAction($id);
+                else
+                    $response = $this->noAuthMessage();
                 break;
             case 'POST':
-                $response = $this->postAction($id);
+                if ($this->isAuthenticated())
+                    $response = $this->postAction($id);
+                else
+                    $response = $this->noAuthMessage();
                 break;
             case 'DELETE':
-                $response = $this->deleteAction($id);
+                if ($this->isAuthenticated())
+                    $response = $this->deleteAction($id);
+                else
+                    $response = $this->noAuthMessage();
                 break;
 
             default:
@@ -46,6 +59,22 @@ abstract class ApiController extends Controller
         }
 
         return $response;
+    }
+
+    public function isAuthenticated()
+    {
+        $item = $this->em->getRepository(Auth::class)->findByToken($_REQUEST['token']);
+        return ($item) ? true : false;
+        if(!$item) {
+
+        }
+    }
+
+    public function noAuthMessage()
+    {
+        $data = ['message' => 'This API request requires authentication via token'];
+        $status = 404;
+        return new Response(new JsonResponse($data), $status, array('content-type' => 'text/json'));
     }
 
     public static function factory($class, $em)

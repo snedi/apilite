@@ -13,7 +13,7 @@ use AppBundle\Entity\Auth;
 
 class AuthApiController extends ApiController
 {
-    private $em;
+    public $em;
 
     public function __construct($em)
     {
