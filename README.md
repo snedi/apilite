@@ -29,3 +29,5 @@ Method|Public|Description
 `DELETE /api/v1/author/{id}?token=<your_token>`|NO|Delete a specified author
 `POST /api/v1/book?token=<your_token>`|NO|Create a new book (request body params: [author_id, name, description])
 `POST /api/v1/author?token=<your_token>`|NO|Create a new author (request body params: [name])
+`PUT /api/v1/book/{id}?token=<your_token>`|NO|Update a specified book (request body params: [author_id, name, description])
+`PUT /api/v1/author/{id}?token=<your_token>`|NO|Update a specified author (request body params: [name])
