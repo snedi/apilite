@@ -13,3 +13,15 @@ INSTALLATION
 TESTS
 --------------
 Run `bin/phpunit -c app` to start all tests
+
+USE
+-------------
+Current implementation of the API has a sample DB (SQLite) with 3 tables: **auth**, **authors** and **books**
+
+Method|Public|Description
+---|---|---
+GET /api/v1/auth|YES|**Make this call first** to get an authentication token to use in non-public methods (th
+GET /api/v1/book|YES|List all books
+GET /api/v1/author|YES|List all authors
+GET /api/v1/book/{id}|YES|Show specified book
+GET /api/v1/author/{id}|YES|Show specified author
