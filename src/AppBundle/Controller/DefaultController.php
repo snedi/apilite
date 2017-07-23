@@ -35,15 +35,23 @@ class DefaultController extends Controller
      */
     public function apiAction(Request $request, $api_version, $res, $id = null)
     {
-        /** @var string $path for API versioning */
-        $path = $this->get('kernel')->locateResource('@AppBundle/Controller/api/v' . $api_version . '/ApiController.php');
-        $apiController = 'AppBundle\Controller\api\v' . $api_version . '\ApiController';
+        $apiController = 'AppBundle\Controller\api\ApiController';
 
-        spl_autoload_register(function () use ($path) {
-            require $path;
+        spl_autoload_register(function ($class) use ($api_version) {
+            /** api version switching */
+            $class = str_replace('api\\', 'api\\v' . $api_version . '\\', $class);
+            $path = $this->get('kernel')->getRootDir() . '\..\src\\' . $class . '.php';
+            
+            if (file_exists($path)) {
+                require $path;
+            } else {
+                echo "API version $api_version is not implemented";
+                die();
+            }
+
         });
 
-        $apiController = $apiController::factory('AppBundle\Controller\api\v1\\' . $apiController::$mapRouteApiClass[$res],
+        $apiController = $apiController::factory('AppBundle\Controller\api\\' . $apiController::$mapRouteApiClass[$res],
             $this->getDoctrine()->getManager());
 
         return $apiController->apiAction([

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\api\v1;
+namespace AppBundle\Controller\api;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use AppBundle\Controller\api\v1\ApiController;
+use AppBundle\Controller\api\ApiController;
 use AppBundle\Entity\Book;
 
 class BookApiController extends ApiController
