@@ -40,8 +40,9 @@ class DefaultController extends Controller
         spl_autoload_register(function ($class) use ($api_version) {
             /** api version switching */
             $class = str_replace('api\\', 'api\\v' . $api_version . '\\', $class);
-            $path = $this->get('kernel')->getRootDir() . '\..\src\\' . $class . '.php';
-            
+	    $class_path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+            $path = $this->get('kernel')->getRootDir() . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . $class_path . ".php";
+
             if (file_exists($path)) {
                 require $path;
             } else {
